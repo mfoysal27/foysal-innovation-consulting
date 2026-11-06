@@ -3,4 +3,4 @@ Allow: /
 
 # Sitemap is generated at build time by @astrojs/sitemap.
 # The absolute URL is derived from SITE.url in src/config/site.ts.
-Sitemap: https://foysal-innovation-consulting.pages.dev/sitemap-index.xml
+Sitemap: https://foysal-innovation-consulting.foysalinnovationconsulting.workers.dev/sitemap-index.xml

@@ -80,9 +80,8 @@ export const SITE: SiteConfig = {
   // No scheduling link supplied yet — stays hidden.
   bookingUrl: "",
 
-  // Provider-issued subdomain placeholder. Replace with the real Pages URL
-  // after the first deployment, then rebuild so canonical/sitemap are correct.
-  url: "https://foysal-innovation-consulting.pages.dev",
+  // Live production URL (Cloudflare Workers static assets deployment).
+  url: "https://foysal-innovation-consulting.foysalinnovationconsulting.workers.dev",
 
   social: [
     // Candidate links from the resume. Kept UNVERIFIED (hidden) until confirmed.
