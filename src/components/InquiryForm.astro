@@ -145,10 +145,12 @@ const emailConfigured = hasContactEmail();
     }
     if (offerParam) {
       const labels = {
+        "biological-tool-review": "Biological Tool Review",
+        "annotation-feasibility-sprint": "Annotation & Analysis Sprint",
+        "mvp-planning-build": "MVP Planning & Build",
+        "custom-project-support": "Idea Validation & Custom Support",
         "idea-opportunity-review": "Idea & Opportunity Review",
         "technical-feasibility-sprint": "Technical Feasibility Sprint",
-        "mvp-planning-build": "MVP Planning & Build",
-        "custom-project-support": "Custom Project Support",
       };
       const label = labels[offerParam] || offerParam;
       const desc = byName("description");

@@ -1,147 +1,151 @@
 /**
  * SERVICE GROUPS
  * --------------------------------------------------------------------------
- * Five coherent service groups. Each has its own detail page at
- * /services/<slug>. Edit copy here; pages and cards read from this file.
+ * Five service groups. The first three are the core offer: custom biological
+ * and biomedical software, AI annotation, and validation tools. MVP development
+ * and idea validation are additional support. Edit copy here; pages and cards
+ * read from this file.
  */
 
 export interface ServiceGroup {
   slug: string;
-  /** Short label for cards and nav. */
   title: string;
-  /** One-line summary for the overview grid. */
   summary: string;
-  /** Who this helps. */
   audience: string;
-  /** The problem addressed. */
   problem: string;
-  /** Typical deliverables. */
   deliverables: string[];
-  /** Honest framing / scope boundaries for this group. */
   note?: string;
-  /** Relevant next step CTA label + target. */
   nextStep: { label: string; href: string };
-  /** Simple icon key handled by the ServiceIcon component. */
-  icon: "discovery" | "proposal" | "software" | "mvp" | "printing";
+  icon: "discovery" | "proposal" | "software" | "mvp" | "validate";
 }
 
 export const SERVICES: ServiceGroup[] = [
   {
-    slug: "business-discovery-commercialization",
-    title: "Business Discovery & Commercialization",
+    slug: "biological-biomedical-software",
+    title: "Biological & Biomedical Software",
     summary:
-      "Clarify the customer, test demand, and gather evidence before you commit engineering budget.",
+      "Purpose-built software for biological and biomedical workflows — from imaging and signals to analysis tools your team can actually use.",
     audience:
-      "Early-stage founders and research teams deciding whether an idea is worth building.",
+      "Research groups, biomedical teams, and life-science founders who need software shaped around a real biological or biomedical workflow.",
     problem:
-      "It is easy to build the wrong thing. Before writing code, you need evidence about who has the problem, how acute it is, and whether a viable commercial path exists.",
+      "General tools rarely fit the data, the lab process, or the question. Teams end up stitching together scripts that are hard to repeat, hand over, or trust.",
     deliverables: [
-      "Customer segment definition",
-      "Interview planning and customer discovery",
-      "Market and competitor research",
-      "Value proposition development",
-      "Business Model Canvas and Lean Canvas workshops",
-      "Business model and pricing hypothesis development",
-      "Early go-to-market planning",
-      "Technical and commercial feasibility assessments",
-      "Research commercialization roadmaps",
-    ],
-    note:
-      "Market discovery is evidence gathering, not guaranteed validation. A useful result can be a recommendation to change direction or to stop before spending more.",
-    nextStep: { label: "Start with an Idea & Opportunity Review", href: "/contact?service=business-discovery-commercialization" },
-    icon: "discovery",
-  },
-  {
-    slug: "proposals-funding-preparation",
-    title: "Business Proposals & Funding Preparation",
-    summary:
-      "Turn a technical idea into a clear, fundable narrative with credible scope and milestones.",
-    audience:
-      "Founders and researchers preparing plans, decks, or SBIR/STTR submissions.",
-    problem:
-      "Technical merit rarely speaks for itself. Reviewers and investors need a structured story: the problem, the approach, feasibility evidence, a realistic plan, and a budget that holds together.",
-    deliverables: [
-      "Business plans and executive summaries",
-      "Pitch deck content and narrative",
-      "Technical proposals and project scopes",
-      "Milestone plans, budgets, and commercialization plans",
-      "SBIR/STTR proposal development and review support",
-      "Technical feasibility evidence and project planning",
-    ],
-    note:
-      "This is proposal development and technical writing support. It is not investment advice, legal advice, agency affiliation, or a guarantee of funding. Current solicitation requirements should always be confirmed against the official program before submission.",
-    nextStep: { label: "Discuss proposal support", href: "/contact?service=proposals-funding-preparation" },
-    icon: "proposal",
-  },
-  {
-    slug: "ai-data-science-software",
-    title: "AI, Data Science & Custom Software",
-    summary:
-      "Practical software and analysis that solve a defined business problem — AI only where it earns its place.",
-    audience:
-      "Small businesses and product teams with a workflow problem or a data/vision/signal challenge.",
-    problem:
-      "Teams often know the outcome they want but not the right technical path. The goal is a maintainable solution that delivers that outcome, not a showcase of model names.",
-    deliverables: [
-      "Computer vision and image analysis",
-      "Signal processing and sensor data analysis",
-      "Machine learning feasibility studies",
-      "Data processing, visualization, and workflow automation",
-      "Custom desktop, web, and Android applications",
-      "Offline and local-first applications where appropriate",
-      "AI assistants and document search when genuinely useful",
+      "Custom desktop, web, and Android applications for biological and biomedical work",
+      "Image analysis and biomedical measurement software",
+      "Signal and sensor analysis tools",
+      "Workflow tools that fit an existing lab or product process",
+      "Offline and local-first applications where data should stay on your systems",
       "Integration with existing tools and data sources",
-      "Model evaluation, deployment planning, and maintainable code handover",
+      "Documentation and maintainable code handover",
     ],
     note:
-      "Work leads with business outcomes and deliverables. Privacy-conscious design is an engineering approach, not a security certification. Where simple automation solves the problem, that is what gets recommended instead of AI.",
-    nextStep: { label: "Scope a software or AI project", href: "/contact?service=ai-data-science-software" },
+      "Work is for research, prototyping, and internal or product workflows. It is not offered as a clinical diagnostic product, and it does not claim clinical suitability or regulatory clearance. Privacy-conscious design is an engineering approach, not a security certification.",
+    nextStep: {
+      label: "Scope a biological software project",
+      href: "/contact?service=biological-biomedical-software",
+    },
     icon: "software",
   },
   {
-    slug: "mvp-on-demand-engineering",
-    title: "MVP & On-Demand Engineering",
+    slug: "ai-annotation-analysis",
+    title: "AI Annotation & Analysis",
     summary:
-      "Go from requirements to a demonstrable prototype or MVP, with clean handover.",
+      "Annotation workflows and AI-assisted analysis for biological images, signals, and related datasets — used only where they improve the work.",
     audience:
-      "Founders who need a working build, and small firms needing specialist project support.",
+      "Teams labeling, reviewing, or analyzing biological and biomedical images, microscopy, or signal data.",
     problem:
-      "You have a concept and need it made real — a proof of concept, a clickable prototype, or a focused MVP — without hiring a full engineering team before it is justified.",
+      "Annotation is slow, inconsistent, and hard to scale. A model only helps if the labels, the evaluation, and the limits are clear.",
+    deliverables: [
+      "Annotation workflow design and custom annotation tools",
+      "AI-assisted labeling and review for images and related data",
+      "Computer vision and image analysis for biological and biomedical data",
+      "Signal processing and sensor-data analysis",
+      "Machine learning feasibility studies on your kind of data",
+      "Model evaluation, error review, and stated limitations",
+      "A recommendation to use simpler automation when AI is unnecessary",
+    ],
+    note:
+      "Annotation and models are research and analysis tools. They are not presented as clinical diagnosis, and a useful outcome can be that AI is not the right next step.",
+    nextStep: {
+      label: "Discuss an annotation or analysis tool",
+      href: "/contact?service=ai-annotation-analysis",
+    },
+    icon: "discovery",
+  },
+  {
+    slug: "validation-scientific-tools",
+    title: "Validation & Scientific Tools",
+    summary:
+      "Check that a biological or biomedical tool does what you think it does, then leave you with pipelines, checks, and a clear record of limits.",
+    audience:
+      "Labs and product teams that need evidence a method, model, or workflow is fit for its stated research or prototyping use.",
+    problem:
+      "A demo is not the same as a tool you can rely on. Without checks against known inputs, failure cases, and a written scope, it is hard to know what the software actually supports.",
+    deliverables: [
+      "Validation plans tied to the question the tool is meant to answer",
+      "Test data, checks, and comparison against an agreed reference where one exists",
+      "Data processing, visualization, and repeatable analysis pipelines",
+      "Quality checks and documented limitations",
+      "Evaluation of models and analysis methods",
+      "Handover notes a scientist or engineer can rerun",
+    ],
+    note:
+      "Validation here means technical and scientific checks against an agreed purpose. It is not clinical validation, regulatory approval, or a guarantee that a method will succeed.",
+    nextStep: {
+      label: "Plan a validation or tooling sprint",
+      href: "/contact?service=validation-scientific-tools",
+    },
+    icon: "proposal",
+  },
+  {
+    slug: "mvp-development",
+    title: "MVP Development",
+    summary:
+      "Additional support to turn a biological or biomedical tool into a focused prototype or MVP, with a clean handover.",
+    audience:
+      "Founders and small teams who already know the scientific problem and need a usable first product or internal tool.",
+    problem:
+      "A working analysis is not yet something a collaborator or early user can run. An MVP has to stay inside a defined scope.",
     deliverables: [
       "Problem and requirements definition",
       "Technical architecture and technology selection",
-      "Proof of concept development",
-      "Clickable prototypes and functional MVPs",
-      "Software and hardware integration feasibility",
+      "Proof of concept, clickable prototype, or functional MVP",
       "Internal tools, dashboards, and test automation",
-      "Defined project troubleshooting and feature development",
+      "Software-to-hardware feasibility, including concept models when a physical form helps",
       "Documentation, handover, and optional ongoing support",
     ],
     note:
-      "Fractional technical advisory is available as a scoped engagement. It is defined by an agreed scope and review points — not an implied full-time CTO commitment or unlimited availability.",
-    nextStep: { label: "Plan an MVP or prototype", href: "/contact?service=mvp-on-demand-engineering" },
+      "This is scoped build support, not a full-time CTO commitment. Physical prototyping, when needed, is assessed and quoted per project. It does not include industrial materials, guaranteed tolerances, medical-grade parts, or clinical devices.",
+    nextStep: {
+      label: "Plan an MVP",
+      href: "/contact?service=mvp-development",
+    },
     icon: "mvp",
   },
   {
-    slug: "3d-printing-physical-prototyping",
-    title: "3D Printing & Physical Prototyping",
+    slug: "idea-validation",
+    title: "Idea Validation",
     summary:
-      "Design-for-prototyping guidance and concept models, assessed and quoted per project.",
+      "Additional support to test whether a biological or biomedical product idea is worth building, before the software budget grows.",
     audience:
-      "Teams bridging software and hardware, or needing enclosures, fixtures, and concept models.",
+      "Early-stage founders and research teams deciding whether a tool, workflow, or product concept should move forward.",
     problem:
-      "A physical concept needs to be held, tested, and iterated. Early prototyping surfaces design issues long before committing to tooling or production.",
+      "A promising technical result is not yet evidence that someone needs the product, or that the first version should be built as imagined.",
     deliverables: [
-      "Design-for-prototyping consultation",
-      "CAD refinement within actual capability",
-      "Enclosures, fixtures, adapters, and concept models",
-      "Prototype printing and iteration",
-      "Software-to-hardware concept demonstrations",
+      "Problem, user, and assumption clarification",
+      "Interview planning and customer or user discovery",
+      "Technical and practical feasibility assessments",
+      "Value proposition and early go-to-market notes",
+      "Business model and pricing hypotheses",
+      "Proposal, pitch, and SBIR/STTR writing support when a submission is the next step",
     ],
     note:
-      "Printing work is assessed and quoted per project. This service does not advertise industrial materials, guaranteed tolerances, shipping promises, medical-grade parts, clinical suitability, or owned production equipment. Every engagement starts with an inquiry — there is no instant checkout or automated quote. Research and prototyping are kept clearly distinct from clinical use.",
-    nextStep: { label: "Inquire about a prototype", href: "/contact?service=3d-printing-physical-prototyping" },
-    icon: "printing",
+      "Discovery gathers evidence. It can recommend a change of direction or a stop. Proposal support is writing and planning help, not investment advice, legal advice, agency affiliation, or a promise of funding.",
+    nextStep: {
+      label: "Start with idea validation",
+      href: "/contact?service=idea-validation",
+    },
+    icon: "validate",
   },
 ];
 

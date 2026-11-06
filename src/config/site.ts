@@ -64,9 +64,10 @@ export const SITE: SiteConfig = {
   brandName: "Foysal Innovation Consulting",
   brandNameShort: "Foysal Innovation",
   monogram: "KF",
-  tagline: "From technical idea to validated opportunity and working prototype.",
+  tagline:
+    "Custom software, AI annotation, and validation tools for biological and biomedical work.",
   positioning:
-    "Founder-led consulting that combines business discovery with hands-on engineering.",
+    "Founder-led consulting for biological and biomedical software, with MVP development and idea validation when you need them.",
 
   founderLegalName: "Md Kamrul Hasan Foysal",
   founderDisplayName: "Kamrul Foysal",
@@ -103,7 +104,7 @@ export const SITE: SiteConfig = {
   defaultTitle: "Foysal Innovation Consulting",
   titleTemplate: "%s | Foysal Innovation Consulting",
   defaultDescription:
-    "Founder-led consulting that turns a promising idea into a clear plan and a working prototype. Business discovery, AI, software, and engineering support for founders and small teams, led by Kamrul Foysal, Ph.D.",
+    "Custom software, AI annotation, and validation tools for biological and biomedical applications, led by Kamrul Foysal, Ph.D. MVP development and idea validation are available as additional support.",
   ogImage: "/og-image.svg",
 };
 

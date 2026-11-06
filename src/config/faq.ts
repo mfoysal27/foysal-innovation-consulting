@@ -1,7 +1,5 @@
 /**
  * FREQUENTLY ASKED QUESTIONS
- * --------------------------------------------------------------------------
- * Honest, scope-aware answers. Edit freely.
  */
 
 export interface FaqItem {
@@ -11,43 +9,58 @@ export interface FaqItem {
 
 export const FAQ: FaqItem[] = [
   {
+    question: "What kinds of biological and biomedical software do you build?",
+    answer:
+      "Custom tools for research and product workflows: image and signal analysis, annotation, data processing, visualization, and small applications your team can run and maintain. The work is scoped to a defined problem rather than a generic platform.",
+  },
+  {
     question: "Can you help before I have a technical specification?",
     answer:
-      "Yes. Many engagements begin exactly there. We start by clarifying the problem, the customer, and the key assumptions, then shape a specification together before any building begins.",
+      "Yes. Many projects start by clarifying the biological question, the data, the people who will use the tool, and the assumptions. A specification comes out of that, before a larger build.",
   },
   {
-    question: "Do you work with solo founders and small businesses?",
+    question: "Is this clinical or diagnostic software?",
     answer:
-      "Yes. The consultancy is built for early-stage founders, small product teams, and small businesses with a defined workflow problem. You work directly with the founder throughout.",
+      "No. Projects are for research, prototyping, and internal or product workflows. They are not offered as clinical diagnostic products and do not claim clinical suitability or regulatory clearance.",
   },
   {
-    question: "Can a project start with a feasibility study?",
+    question: "Can a project start with annotation or a feasibility study?",
     answer:
-      "Absolutely. A Technical Feasibility Sprint is often the lowest-risk way to begin: we examine the inputs, constraints, and approach, build prototype evidence where it helps, and finish with a clear recommendation and stated limitations.",
+      "Yes. An Annotation & Analysis Sprint is a common first step: review the data and labeling needs, test an approach with prototype evidence where it helps, and finish with a recommendation and stated limits.",
   },
   {
-    question: "Can software run offline?",
+    question: "Do you also help with MVPs and idea validation?",
     answer:
-      "Where it fits the problem, yes. Offline and local-first designs are an option — useful when connectivity, cost, or data-handling considerations matter. This is an engineering approach, chosen per project, not a security guarantee.",
+      "Yes, as additional support around the software. MVP work turns an agreed scope into a usable first version. Idea validation tests whether the problem and the user justify building it. Both are scoped; neither is an open-ended product team.",
   },
   {
-    question: "Do you offer 3D printing?",
+    question: "Can software run offline or stay on local systems?",
     answer:
-      "Yes, as an inquiry-first service. Prototyping work is assessed and quoted per project. There is no instant checkout or automated quote, and no claim of industrial materials, guaranteed tolerances, or medical-grade parts.",
+      "Where the data and the workflow call for it, yes. Offline and local-first designs are an option for research data that should not leave your environment. That is a design choice, not a security certification.",
+  },
+  {
+    question: "Who do you work with?",
+    answer:
+      "Research groups, biomedical and biological product teams, early-stage founders, and small businesses with a defined workflow. You work directly with the founder.",
   },
   {
     question: "Do you support grant proposals?",
     answer:
-      "Yes — proposal development and review support, including for SBIR/STTR. This is technical writing and planning support, not investment or legal advice, agency affiliation, or a guarantee of funding. Current solicitation requirements should always be confirmed against the official program.",
+      "Yes, as part of idea-validation and planning support, including SBIR/STTR writing help. It is technical writing and planning, not investment or legal advice, agency affiliation, or a guarantee of funding.",
+  },
+  {
+    question: "Do you still help with physical prototypes?",
+    answer:
+      "When a software concept needs a physical form, prototyping can be included in an MVP engagement. It is assessed and quoted per project, with no claim of industrial materials, guaranteed tolerances, or medical-grade parts.",
   },
   {
     question: "Who owns the delivered work?",
     answer:
-      "Ownership, intellectual property, and confidentiality terms are agreed in writing before work begins. Delivered, purpose-built work is handed over to you; pre-existing tools and third-party components are addressed explicitly in that agreement rather than assumed to transfer.",
+      "Ownership, intellectual property, and confidentiality are agreed in writing before work begins. Purpose-built work is handed over to you. Pre-existing tools and third-party components are named in that agreement rather than assumed to transfer.",
   },
   {
     question: "How are costs and timelines determined?",
     answer:
-      "Each engagement is scoped individually. After an initial discussion we agree a scope, then provide a written proposal with milestones so costs and timelines are clear before work starts. Pricing is provided per proposal rather than published as fixed rates.",
+      "After a first discussion, you receive a written proposal with scope and milestones. Pricing is per proposal, not a published rate card.",
   },
 ];

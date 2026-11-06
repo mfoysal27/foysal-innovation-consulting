@@ -18,15 +18,15 @@
   </g>
 
   <text x="230" y="150" font-family="Georgia, serif" font-size="34" fill="#17283d" font-weight="700">Foysal Innovation Consulting</text>
-  <text x="230" y="192" font-family="Arial, sans-serif" font-size="22" fill="#6a7686">Kamrul Foysal, Ph.D.  Rochester, Minnesota</text>
+  <text x="230" y="192" font-family="Arial, sans-serif" font-size="22" fill="#6a7686">Kamrul Foysal, Ph.D. — Rochester, Minnesota</text>
 
-  <text x="80" y="330" font-family="Georgia, serif" font-size="58" fill="#17283d" font-weight="700">
-    <tspan x="80" dy="0">Turn a promising idea into a clear</tspan>
-    <tspan x="80" dy="70">plan and a working prototype.</tspan>
+  <text x="80" y="310" font-family="Georgia, serif" font-size="52" fill="#17283d" font-weight="700">
+    <tspan x="80" dy="0">Custom software and AI tools</tspan>
+    <tspan x="80" dy="68">for biological and biomedical work.</tspan>
   </text>
 
   <text x="80" y="500" font-family="Arial, sans-serif" font-size="26" fill="#3c4a5c">
-    Business discovery · AI &amp; software · MVP engineering · prototyping
+    Annotation · analysis · validation · MVP support
   </text>
 
   <!-- Signal trace artwork -->

@@ -16,4 +16,11 @@ export default defineConfig({
     format: "directory",
   },
   compressHTML: true,
+  redirects: {
+    "/services/business-discovery-commercialization": "/services/idea-validation",
+    "/services/proposals-funding-preparation": "/services/idea-validation",
+    "/services/ai-data-science-software": "/services/biological-biomedical-software",
+    "/services/mvp-on-demand-engineering": "/services/mvp-development",
+    "/services/3d-printing-physical-prototyping": "/services/mvp-development",
+  },
 });
