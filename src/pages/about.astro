@@ -1,0 +1,147 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BrandMark from "../components/BrandMark.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../config/site";
+import {
+  BIO_PARAGRAPHS,
+  EDUCATION,
+  EXPERTISE,
+  BACKGROUND_HIGHLIGHTS,
+} from "../config/bio";
+---
+
+<BaseLayout
+  title="About"
+  description={`About ${SITE.founderDisplayName}, ${SITE.founderCredential} — the engineer and founder behind ${SITE.brandName}.`}
+  canonicalPath="/about"
+>
+  <section class="section--tight page-hero">
+    <div class="container about-hero">
+      <div class="about-hero__mark" aria-hidden="true">
+        <BrandMark variant="mark" size={96} />
+      </div>
+      <div>
+        <p class="eyebrow">About</p>
+        <h1>{SITE.founderDisplayName}, {SITE.founderCredential}</h1>
+        <p class="lead">
+          Founder &amp; Principal Consultant · {SITE.location}
+        </p>
+        <p class="muted">{SITE.serviceArea}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container about-grid">
+      <div class="about-bio">
+        {BIO_PARAGRAPHS.map((p) => <p data-reveal>{p}</p>)}
+        <p class="about-independence muted" data-reveal>{SITE.independenceNotice}</p>
+        <p class="about-independence muted" data-reveal>
+          Engineering degrees are academic qualifications and are not presented
+          as Professional Engineer (PE) licensure.
+        </p>
+      </div>
+
+      <aside class="about-side">
+        <div class="card about-card" data-reveal>
+          <h2 class="about-card__h">Highlights</h2>
+          <ul class="about-highlights">
+            {BACKGROUND_HIGHLIGHTS.map((h) => (
+              <li><Icon name="check" size={16} /> <span>{h}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="card about-card" data-reveal>
+          <h2 class="about-card__h">Education</h2>
+          <ul class="about-edu">
+            {EDUCATION.map((e) => (
+              <li>
+                <strong>{e.degree}, {e.field}</strong>
+                <span class="muted">{e.institution}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Capabilities</p>
+        <h2>Technical &amp; commercial expertise</h2>
+      </div>
+      <div class="grid grid-2 expertise-grid">
+        {EXPERTISE.map((group) => (
+          <div class="card expertise" data-reveal>
+            <h3 class="expertise__h">{group.group}</h3>
+            <div class="expertise__tags">
+              {group.items.map((item) => <span class="tag">{item}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <CtaBand
+      title="Want to work together?"
+      text="Tell me about your idea or problem. We'll start with a short conversation and figure out the right first step."
+      secondaryLabel="Explore Services"
+      secondaryHref="/services"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-top: var(--space-7); }
+  .about-hero { display: flex; gap: var(--space-5); align-items: center; }
+  .about-hero__mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 140px;
+    height: 140px;
+    border-radius: 24px;
+    background: var(--c-bg-alt);
+    border: 1px solid var(--c-border);
+  }
+  .about-hero h1 { margin-block: var(--space-2) var(--space-3); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .about-bio { display: flex; flex-direction: column; gap: var(--space-4); }
+  .about-bio p { font-size: 1.08rem; }
+  .about-independence { font-size: 0.85rem; }
+
+  .about-side { display: flex; flex-direction: column; gap: var(--space-5); position: sticky; top: 90px; }
+  .about-card__h { font-size: 1.15rem; margin-bottom: var(--space-4); }
+  .about-highlights, .about-edu { list-style: none; padding: 0; margin: 0; }
+  .about-highlights { display: flex; flex-direction: column; gap: var(--space-3); }
+  .about-highlights li { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.92rem; }
+  .about-highlights svg { color: var(--c-accent); flex: none; margin-top: 3px; }
+  .about-edu { display: flex; flex-direction: column; gap: var(--space-4); }
+  .about-edu li { display: flex; flex-direction: column; gap: 0.15rem; }
+  .about-edu strong { color: var(--c-ink); font-weight: 600; font-size: 0.95rem; }
+  .about-edu span { font-size: 0.88rem; }
+
+  .expertise__h { font-size: 1.15rem; margin-bottom: var(--space-4); }
+  .expertise__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-side { position: static; }
+  }
+  @media (max-width: 560px) {
+    .about-hero { flex-direction: column; align-items: flex-start; }
+    .about-hero__mark { width: 96px; height: 96px; }
+  }
+</style>

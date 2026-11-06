@@ -1,0 +1,278 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import PathwayCard from "../components/PathwayCard.astro";
+import OfferCard from "../components/OfferCard.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import BrandMark from "../components/BrandMark.astro";
+
+import { SITE } from "../config/site";
+import { SERVICES } from "../config/services";
+import { PATHWAYS } from "../config/pathways";
+import { OFFERS } from "../config/offers";
+import { PROCESS } from "../config/process";
+import { EXPERIENCE } from "../config/experience";
+import { FAQ } from "../config/faq";
+import { CREDIBILITY_SUMMARY, BACKGROUND_HIGHLIGHTS } from "../config/bio";
+
+const homeFaq = FAQ.slice(0, 5);
+const experienceTeaser = EXPERIENCE.slice(0, 3);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <!-- Credibility strip -->
+  <section class="section--tight credibility" aria-label="Founder credibility">
+    <div class="container">
+      <p class="credibility__text">{CREDIBILITY_SUMMARY}</p>
+      <ul class="credibility__list">
+        {BACKGROUND_HIGHLIGHTS.map((h) => (
+          <li><Icon name="check" size={16} /> <span>{h}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Three pathways -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">One coherent journey</p>
+        <h2>Three pathways from idea to working solution</h2>
+        <p class="lead">
+          Most engagements follow a natural arc. Start wherever you are — each
+          stage produces something useful you can act on.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {PATHWAYS.map((p) => <PathwayCard pathway={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured starting offers -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Starting offers</p>
+        <h2>Concrete ways to begin</h2>
+        <p class="lead">
+          Three focused entry points, plus custom support for anything outside
+          them. Pricing is provided as a scoped proposal, never guessed.
+        </p>
+      </div>
+      <div class="grid grid-3 offers-grid">
+        {OFFERS.map((o) => <OfferCard offer={o} />)}
+      </div>
+      <p class="offers-note muted" data-reveal>
+        Need something different?
+        <a href="/contact?offer=custom-project-support">Describe your project</a>
+        and we'll scope it together.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services overview -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">What I do</p>
+        <h2>Five focused service areas</h2>
+      </div>
+      <div class="grid grid-3">
+        {SERVICES.map((s) => <ServiceCard service={s} />)}
+      </div>
+      <div class="btn-row" data-reveal style="margin-top: var(--space-5);">
+        <a href="/services" class="btn btn--secondary">See all services <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected experience teaser -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Selected experience</p>
+        <h2>Background that informs the work</h2>
+        <p class="lead">
+          A sample of the founder's prior research and R&amp;D. These describe
+          professional background, not consultancy client projects.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {experienceTeaser.map((item) => (
+          <article class="xp card card--hover" data-reveal>
+            <span class="tag">{item.category}</span>
+            <h3 class="xp__title">{item.title}</h3>
+            <p class="xp__demo">{item.demonstrates}</p>
+          </article>
+        ))}
+      </div>
+      <div class="btn-row" data-reveal style="margin-top: var(--space-5);">
+        <a href="/experience" class="btn btn--secondary">View selected experience <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How engagement works -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">How engagement works</p>
+        <h2>A clear, low-risk path to starting</h2>
+      </div>
+      <ol class="process">
+        {PROCESS.map((step) => (
+          <li class="process__item" data-reveal>
+            <span class="process__num">{step.step}</span>
+            <div>
+              <h3 class="process__title">{step.title}</h3>
+              <p class="process__desc">{step.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Founder introduction -->
+  <section class="section">
+    <div class="container founder">
+      <div class="founder__mark" data-reveal aria-hidden="true">
+        <BrandMark variant="mark" size={120} />
+      </div>
+      <div class="founder__body" data-reveal>
+        <p class="eyebrow">Who you work with</p>
+        <h2>Led by {SITE.founderDisplayName}, {SITE.founderCredential}</h2>
+        <p class="lead">
+          A Ph.D. engineer and data scientist with CEO and CTO experience across
+          startups. You work directly with the founder — the same person doing
+          the discovery and the engineering.
+        </p>
+        <p class="muted founder__independence">{SITE.independenceNotice}</p>
+        <div class="btn-row">
+          <a href="/about" class="btn btn--secondary">More about Kamrul <Icon name="arrow" size={18} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Short FAQ -->
+  <section class="section section--alt">
+    <div class="container-narrow">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Good to know</p>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <FaqAccordion items={homeFaq} />
+      <p class="muted" style="margin-top: var(--space-4);" data-reveal>
+        <a href="/contact">More questions? Start a conversation →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Final inquiry CTA -->
+  <div class="container">
+    <CtaBand
+      title="Turn your idea into a plan and a prototype"
+      text="Share what you're working on. The first step is a short conversation to understand the problem and whether I can help."
+      secondaryLabel="Explore Services"
+      secondaryHref="/services"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .credibility {
+    border-block: 1px solid var(--c-border);
+    background: var(--c-surface);
+  }
+  .credibility__text {
+    font-family: var(--font-head);
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    color: var(--c-ink);
+    max-width: 62ch;
+    margin-bottom: var(--space-4);
+  }
+  .credibility__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+  .credibility__list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.92rem;
+    color: var(--c-ink-soft);
+  }
+  .credibility__list svg { color: var(--c-accent); flex: none; }
+
+  .offers-grid { align-items: stretch; margin-top: var(--space-2); }
+  .offers-note { text-align: center; margin-top: var(--space-6); }
+
+  .xp { display: flex; flex-direction: column; gap: var(--space-3); }
+  .xp__title { margin: 0; font-size: 1.2rem; }
+  .xp__demo { color: var(--c-ink-soft); font-size: 0.95rem; }
+
+  .process {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .process__item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+  }
+  .process__num {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-strong);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  .process__title { margin-bottom: 0.25rem; font-size: 1.2rem; }
+  .process__desc { margin: 0; color: var(--c-ink-soft); }
+
+  .founder {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+  .founder__mark {
+    display: grid;
+    place-items: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 24px;
+    background: var(--c-bg-alt);
+    border: 1px solid var(--c-border);
+  }
+  .founder__independence { font-size: 0.85rem; margin-top: var(--space-4); }
+
+  @media (max-width: 760px) {
+    .founder { grid-template-columns: 1fr; }
+    .founder__mark { width: 120px; height: 120px; }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+/**
+ * ServiceCard — concise, scannable card for a service group.
+ */
+import Icon from "./Icon.astro";
+import type { ServiceGroup } from "../config/services";
+
+export interface Props {
+  service: ServiceGroup;
+}
+const { service } = Astro.props;
+---
+
+<article class="service-card card card--hover" data-reveal>
+  <span class="service-card__icon" aria-hidden="true">
+    <Icon name={service.icon} size={26} />
+  </span>
+  <h3 class="service-card__title">
+    <a href={`/services/${service.slug}`}>{service.title}</a>
+  </h3>
+  <p class="service-card__summary">{service.summary}</p>
+  <a href={`/services/${service.slug}`} class="service-card__more">
+    Learn more <Icon name="arrow" size={16} />
+  </a>
+</article>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+  }
+  .service-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-strong);
+    margin-bottom: var(--space-2);
+  }
+  .service-card__title { margin: 0; }
+  .service-card__title a { color: var(--c-ink); text-decoration: none; }
+  .service-card__title a:hover { color: var(--c-accent-strong); }
+  .service-card__summary { color: var(--c-ink-soft); flex: 1; }
+  .service-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: var(--space-2);
+  }
+  .service-card__more:hover { gap: 0.6rem; }
+</style>

@@ -1,0 +1,388 @@
+---
+/**
+ * InquiryForm — qualified project inquiry.
+ *
+ * Delivery strategy (honest by design):
+ *  1. If PUBLIC_FORM_ENDPOINT is configured, POST to it.
+ *  2. Else if a contact email is configured, build an encoded mailto draft in
+ *     the visitor's mail app. The visitor must press send themselves — the UI
+ *     never claims the message was sent.
+ *  3. Else, the form clearly states online inquiry is being configured.
+ *
+ * Service interest is pre-filled from ?service=<slug>; an ?offer=<id> adds a
+ * reference line to the description. Entered values are preserved on
+ * validation errors (no navigation occurs).
+ */
+import { SITE, hasContactEmail } from "../config/site";
+import { SERVICES } from "../config/services";
+
+const emailConfigured = hasContactEmail();
+---
+
+<form class="inquiry" data-inquiry novalidate aria-describedby="inquiry-intro">
+  <p id="inquiry-intro" class="inquiry__intro muted">
+    Please do not submit confidential information, patient data, or proprietary
+    files through this form. Share enough to start a conversation — details and
+    documents can follow under a written agreement.
+  </p>
+
+  <div class="inquiry__row">
+    <div class="field">
+      <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required aria-required="true" />
+      <p class="field__error" id="err-name" hidden>Please enter your name.</p>
+    </div>
+    <div class="field">
+      <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required aria-required="true" inputmode="email" />
+      <p class="field__error" id="err-email" hidden>Please enter a valid email address.</p>
+    </div>
+  </div>
+
+  <div class="inquiry__row">
+    <div class="field">
+      <label for="f-company">Company <span class="opt">(optional)</span></label>
+      <input id="f-company" name="company" type="text" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="f-service">Service interest <span class="opt">(optional)</span></label>
+      <select id="f-service" name="service">
+        <option value="">Select a service interest</option>
+        {SERVICES.map((s) => <option value={s.slug}>{s.title}</option>)}
+        <option value="general">General / not sure yet</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-description">Brief project description <span class="req" aria-hidden="true">*</span></label>
+    <textarea id="f-description" name="description" rows="5" required aria-required="true"
+      placeholder="What are you trying to build or solve? What stage are you at?"></textarea>
+    <p class="field__error" id="err-description" hidden>Please share a short description so I can respond usefully.</p>
+  </div>
+
+  <div class="inquiry__row">
+    <div class="field">
+      <label for="f-stage">Current stage <span class="req" aria-hidden="true">*</span></label>
+      <select id="f-stage" name="stage" required aria-required="true">
+        <option value="">Select current stage</option>
+        <option>Just an idea</option>
+        <option>Validating the problem</option>
+        <option>Building a prototype / MVP</option>
+        <option>Have a product, improving it</option>
+        <option>Not sure</option>
+      </select>
+      <p class="field__error" id="err-stage" hidden>Please select your current stage.</p>
+    </div>
+    <div class="field">
+      <label for="f-budget">Budget range <span class="opt">(optional)</span></label>
+      <select id="f-budget" name="budget">
+        <option value="">Prefer not to say</option>
+        <option>Not sure yet</option>
+        <option>Under $5,000</option>
+        <option>$5,000 – $15,000</option>
+        <option>$15,000 – $50,000</option>
+        <option>$50,000+</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-timeline">Desired timeline <span class="opt">(optional)</span></label>
+    <select id="f-timeline" name="timeline">
+      <option value="">No specific timeline</option>
+      <option>As soon as possible</option>
+      <option>Within 1–3 months</option>
+      <option>Within 3–6 months</option>
+      <option>Flexible</option>
+    </select>
+  </div>
+
+  <!-- simple honeypot (kept off-screen, not a guarantee) -->
+  <div class="hp" aria-hidden="true">
+    <label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="inquiry__submit">
+    <button type="submit" class="btn btn--primary" data-submit>
+      {emailConfigured ? "Prepare Email Inquiry" : "Prepare Inquiry"}
+    </button>
+    <p class="inquiry__hint muted" data-hint>
+      {emailConfigured
+        ? "This opens a pre-filled draft in your email app. Your message is not sent until you review and press send."
+        : "Online inquiry setup is being finalized."}
+    </p>
+  </div>
+
+  <div class="inquiry__status" data-status role="status" aria-live="polite" hidden></div>
+</form>
+
+<script
+  is:inline
+  define:vars={{
+    contactEmail: SITE.contactEmail,
+    brandName: SITE.brandName,
+    formEndpoint: import.meta.env.PUBLIC_FORM_ENDPOINT ?? "",
+    services: SERVICES.map((s) => ({ slug: s.slug, title: s.title })),
+  }}
+>
+  (function () {
+    const form = document.querySelector("[data-inquiry]");
+    if (!form) return;
+    const statusEl = form.querySelector("[data-status]");
+
+    const byName = (n) => form.querySelector('[name="' + n + '"]');
+
+    // --- Prefill from query params (service / offer) ---
+    const params = new URLSearchParams(window.location.search);
+    const serviceParam = params.get("service");
+    const offerParam = params.get("offer");
+    const serviceSelect = byName("service");
+    if (serviceParam && serviceSelect) {
+      const match = services.find((s) => s.slug === serviceParam);
+      if (match) serviceSelect.value = match.slug;
+      else if (serviceParam === "general") serviceSelect.value = "general";
+    }
+    if (offerParam) {
+      const labels = {
+        "idea-opportunity-review": "Idea & Opportunity Review",
+        "technical-feasibility-sprint": "Technical Feasibility Sprint",
+        "mvp-planning-build": "MVP Planning & Build",
+        "custom-project-support": "Custom Project Support",
+      };
+      const label = labels[offerParam] || offerParam;
+      const desc = byName("description");
+      if (desc && !desc.value) {
+        desc.value = "I'm interested in: " + label + ".\n\n";
+      }
+    }
+
+    // --- Validation helpers ---
+    const setError = (name, show) => {
+      const input = byName(name);
+      const err = document.getElementById("err-" + name);
+      if (!input || !err) return;
+      err.hidden = !show;
+      if (show) {
+        input.setAttribute("aria-invalid", "true");
+        input.setAttribute("aria-describedby", "err-" + name);
+      } else {
+        input.removeAttribute("aria-invalid");
+        input.removeAttribute("aria-describedby");
+      }
+    };
+
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    const validate = () => {
+      let firstInvalid = null;
+      const checks = [
+        ["name", byName("name").value.trim().length > 0],
+        ["email", isEmail(byName("email").value.trim())],
+        ["description", byName("description").value.trim().length > 0],
+        ["stage", byName("stage").value.trim().length > 0],
+      ];
+      checks.forEach(([n, ok]) => {
+        setError(n, !ok);
+        if (!ok && !firstInvalid) firstInvalid = byName(n);
+      });
+      if (firstInvalid) firstInvalid.focus();
+      return !firstInvalid;
+    };
+
+    const showStatus = (msg, kind) => {
+      if (!statusEl) return;
+      statusEl.hidden = false;
+      statusEl.textContent = msg;
+      statusEl.dataset.kind = kind;
+    };
+
+    const collect = () => ({
+      name: byName("name").value.trim(),
+      email: byName("email").value.trim(),
+      company: byName("company").value.trim(),
+      service: serviceSelect ? (serviceSelect.selectedOptions[0]?.text || "") : "",
+      description: byName("description").value.trim(),
+      stage: byName("stage").value.trim(),
+      budget: byName("budget").value.trim(),
+      timeline: byName("timeline").value.trim(),
+    });
+
+    const buildBody = (d) =>
+      [
+        "Name: " + d.name,
+        "Email: " + d.email,
+        d.company ? "Company: " + d.company : null,
+        d.service ? "Service interest: " + d.service : null,
+        "Current stage: " + d.stage,
+        d.budget ? "Budget range: " + d.budget : null,
+        d.timeline ? "Desired timeline: " + d.timeline : null,
+        "",
+        "Project description:",
+        d.description,
+      ]
+        .filter((x) => x !== null)
+        .join("\n");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Honeypot: silently ignore obvious bots.
+      if (byName("website") && byName("website").value) return;
+
+      if (!validate()) {
+        showStatus("Please fix the highlighted fields and try again.", "error");
+        return;
+      }
+
+      const data = collect();
+
+      // Strategy 1: configured POST endpoint.
+      if (formEndpoint) {
+        showStatus("Sending your inquiry…", "pending");
+        fetch(formEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((r) => {
+            if (r.ok) {
+              form.reset();
+              showStatus("Thank you — your inquiry has been received. I'll reply by email.", "success");
+            } else {
+              showStatus("Something went wrong sending your inquiry. Please email me directly instead.", "error");
+            }
+          })
+          .catch(() => {
+            showStatus("Could not reach the server. Please email me directly instead.", "error");
+          });
+        return;
+      }
+
+      // Strategy 2: email-draft fallback.
+      if (contactEmail) {
+        const subject = "Project inquiry — " + data.name;
+        const mailto =
+          "mailto:" +
+          encodeURIComponent(contactEmail) +
+          "?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(buildBody(data));
+        window.location.href = mailto;
+        showStatus(
+          "Your email draft is ready in your mail app. Please review it and press send — your message is NOT sent until you do.",
+          "success"
+        );
+        return;
+      }
+
+      // Strategy 3: nothing configured yet — stay honest.
+      showStatus(
+        "Online inquiry is being configured and a direct contact email will be published shortly. Please check back soon.",
+        "error"
+      );
+    });
+
+    // Clear an error as the user corrects a field.
+    ["name", "email", "description", "stage"].forEach((n) => {
+      const el = byName(n);
+      if (el) el.addEventListener("input", () => setError(n, false));
+    });
+  })();
+</script>
+
+<style>
+  .inquiry {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .inquiry__intro {
+    font-size: 0.9rem;
+    background: var(--c-bg-alt);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    margin: 0;
+    max-width: none;
+  }
+  .inquiry__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--c-ink);
+  }
+  .req { color: var(--c-accent-strong); }
+  .opt { color: var(--c-muted); font-weight: 400; font-size: 0.82rem; }
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--c-ink);
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-border-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.85rem;
+    width: 100%;
+    transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  }
+  .field textarea { resize: vertical; min-height: 120px; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 3px var(--c-accent-soft);
+  }
+  .field [aria-invalid="true"] {
+    border-color: #b42318;
+    box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+  }
+  .field__error { color: #b42318; font-size: 0.85rem; margin: 0; max-width: none; }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .inquiry__submit {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .inquiry__hint { font-size: 0.85rem; margin: 0; }
+
+  .inquiry__status {
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    border: 1px solid var(--c-border);
+  }
+  .inquiry__status[data-kind="success"] {
+    background: var(--c-accent-soft);
+    border-color: color-mix(in srgb, var(--c-accent) 35%, transparent);
+    color: var(--c-accent-strong);
+  }
+  .inquiry__status[data-kind="error"] {
+    background: #fdecea;
+    border-color: #f1b4ad;
+    color: #8a2117;
+  }
+  .inquiry__status[data-kind="pending"] {
+    background: var(--c-bg-alt);
+  }
+
+  @media (max-width: 640px) {
+    .inquiry__row { grid-template-columns: 1fr; }
+  }
+</style>

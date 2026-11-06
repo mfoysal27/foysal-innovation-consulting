@@ -1,0 +1,131 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import OfferCard from "../../components/OfferCard.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { SERVICES } from "../../config/services";
+import { OFFERS, CUSTOM_OFFER } from "../../config/offers";
+import { PATHWAYS } from "../../config/pathways";
+---
+
+<BaseLayout
+  title="Services"
+  description="Business discovery, proposals and funding prep, AI and custom software, MVP engineering, and 3D prototyping — five focused service areas for founders and small teams."
+  canonicalPath="/services"
+>
+  <section class="section--tight page-hero">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1>Support across the full idea-to-product journey</h1>
+      <p class="lead">
+        Five focused service areas, organized around one coherent path: validate
+        the opportunity, build the prototype, and develop the solution. You can
+        start at any stage.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="grid grid-3">
+        {SERVICES.map((s) => <ServiceCard service={s} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">How it fits together</p>
+        <h2>The pathways these services support</h2>
+      </div>
+      <div class="grid grid-3">
+        {PATHWAYS.map((p) => (
+          <div class="pathway-mini card" data-reveal>
+            <span class="pathway-mini__step">{p.step}</span>
+            <h3>{p.title}</h3>
+            <p>{p.description}</p>
+            <ul class="pathway-mini__links">
+              {p.relatedServices.map((slug) => {
+                const svc = SERVICES.find((s) => s.slug === slug);
+                return svc ? (
+                  <li><a href={`/services/${svc.slug}`}>{svc.title} <Icon name="arrow" size={14} /></a></li>
+                ) : null;
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Starting offers</p>
+        <h2>Concrete ways to begin</h2>
+        <p class="lead">Scoped entry points with a clear deliverable. Pricing is provided as a scoped proposal.</p>
+      </div>
+      <div class="grid grid-3 offers-grid">
+        {OFFERS.map((o) => <OfferCard offer={o} />)}
+      </div>
+      <div class="custom-offer card" data-reveal>
+        <div>
+          <h3>{CUSTOM_OFFER.title}</h3>
+          <p>{CUSTOM_OFFER.description}</p>
+        </div>
+        <a href={CUSTOM_OFFER.cta.href} class="btn btn--secondary">{CUSTOM_OFFER.cta.label} <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <CtaBand secondaryLabel="About the founder" secondaryHref="/about" />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-top: var(--space-7); }
+  .page-hero h1 { margin-block: var(--space-3) var(--space-4); }
+
+  .pathway-mini { height: 100%; }
+  .pathway-mini__step {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--c-accent);
+    font-size: 1.3rem;
+  }
+  .pathway-mini h3 { margin-block: var(--space-2); }
+  .pathway-mini__links {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .pathway-mini__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  .custom-offer {
+    margin-top: var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    background: var(--c-bg-alt);
+  }
+  .custom-offer h3 { margin-bottom: var(--space-2); }
+  .custom-offer p { margin: 0; }
+
+  @media (max-width: 640px) {
+    .custom-offer { flex-direction: column; align-items: flex-start; }
+  }
+</style>

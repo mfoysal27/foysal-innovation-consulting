@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { NAV_LINKS } from "../config/site";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you were looking for could not be found."
+  noindex={true}
+>
+  <section class="section notfound">
+    <div class="container-narrow notfound__inner">
+      <p class="notfound__code">404</p>
+      <h1>This page wandered off</h1>
+      <p class="lead">
+        The page you were looking for doesn't exist or may have moved. Let's get
+        you back on track.
+      </p>
+      <div class="btn-row notfound__actions">
+        <a href="/" class="btn btn--primary">Back to home <Icon name="arrow" size={18} /></a>
+        <a href="/contact" class="btn btn--secondary">Start a project</a>
+      </div>
+      <nav class="notfound__links" aria-label="Helpful links">
+        <p class="muted">Or try one of these:</p>
+        <ul>
+          {NAV_LINKS.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { text-align: center; padding-block: var(--space-9); }
+  .notfound__inner { display: flex; flex-direction: column; align-items: center; }
+  .notfound__code {
+    font-family: var(--font-head);
+    font-size: clamp(4rem, 14vw, 8rem);
+    font-weight: 700;
+    color: var(--c-accent);
+    line-height: 1;
+    margin-bottom: var(--space-3);
+  }
+  .notfound h1 { margin-bottom: var(--space-3); }
+  .notfound .lead { max-width: 46ch; margin-bottom: var(--space-5); }
+  .notfound__actions { justify-content: center; }
+  .notfound__links { margin-top: var(--space-7); }
+  .notfound__links ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
+    display: flex;
+    gap: var(--space-5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

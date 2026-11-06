@@ -1,0 +1,183 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { SERVICES } from "../../config/services";
+import type { ServiceGroup } from "../../config/services";
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: ServiceGroup;
+}
+const { service } = Astro.props;
+
+const others = SERVICES.filter((s) => s.slug !== service.slug);
+---
+
+<BaseLayout
+  title={service.title}
+  description={service.summary}
+  canonicalPath={`/services/${service.slug}`}
+>
+  <section class="section--tight page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="/services">Services</a> <span aria-hidden="true">/</span> {service.title}</p>
+      <div class="svc-hero">
+        <span class="svc-hero__icon" aria-hidden="true"><Icon name={service.icon} size={30} /></span>
+        <div>
+          <h1>{service.title}</h1>
+          <p class="lead">{service.summary}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container svc-grid">
+      <div class="svc-main">
+        <div class="svc-block" data-reveal>
+          <h2>Who this helps</h2>
+          <p>{service.audience}</p>
+        </div>
+        <div class="svc-block" data-reveal>
+          <h2>The problem it addresses</h2>
+          <p>{service.problem}</p>
+        </div>
+        <div class="svc-block" data-reveal>
+          <h2>Typical deliverables</h2>
+          <ul class="svc-deliverables">
+            {service.deliverables.map((d) => (
+              <li><Icon name="check" size={18} /> <span>{d}</span></li>
+            ))}
+          </ul>
+        </div>
+        {service.note && (
+          <aside class="svc-note" data-reveal>
+            <h2 class="svc-note__h">An honest note on scope</h2>
+            <p>{service.note}</p>
+          </aside>
+        )}
+      </div>
+
+      <aside class="svc-side" data-reveal>
+        <div class="svc-side__card card">
+          <h2 class="svc-side__h">Next step</h2>
+          <p>Ready to explore this? Start with a short, no-pressure conversation.</p>
+          <a href={service.nextStep.href} class="btn btn--primary svc-side__cta">
+            {service.nextStep.label} <Icon name="arrow" size={18} />
+          </a>
+        </div>
+        <nav class="svc-side__nav" aria-label="Other services">
+          <h2 class="svc-side__h">Other services</h2>
+          <ul>
+            {others.map((o) => (
+              <li><a href={`/services/${o.slug}`}>{o.title} <Icon name="arrow" size={14} /></a></li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container">
+    <CtaBand
+      title={`Have a ${service.title.toLowerCase()} challenge?`}
+      text="Tell me what you're working on and I'll suggest the most sensible first step."
+      primaryLabel={service.nextStep.label}
+      primaryHref={service.nextStep.href}
+      secondaryLabel="See all services"
+      secondaryHref="/services"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-top: var(--space-6); }
+  .crumbs { font-size: 0.9rem; color: var(--c-muted); margin-bottom: var(--space-4); }
+  .crumbs a { text-decoration: none; }
+  .crumbs span { margin-inline: 0.4rem; }
+
+  .svc-hero { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .svc-hero__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-strong);
+  }
+  .svc-hero h1 { margin-bottom: var(--space-3); }
+
+  .svc-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .svc-main { display: flex; flex-direction: column; gap: var(--space-6); }
+  .svc-block h2 { font-size: 1.4rem; margin-bottom: var(--space-3); }
+  .svc-deliverables {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .svc-deliverables li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--c-ink-soft);
+  }
+  .svc-deliverables svg { color: var(--c-accent); flex: none; margin-top: 3px; }
+
+  .svc-note {
+    background: var(--c-bg-alt);
+    border: 1px solid var(--c-border);
+    border-left: 3px solid var(--c-accent);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+  }
+  .svc-note__h { font-size: 1.1rem; margin-bottom: var(--space-2); }
+  .svc-note p { margin: 0; }
+
+  .svc-side { position: sticky; top: 90px; display: flex; flex-direction: column; gap: var(--space-5); }
+  .svc-side__h {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: var(--space-3);
+  }
+  .svc-side__card .svc-side__h { color: var(--c-accent-strong); }
+  .svc-side__card p { margin-bottom: var(--space-4); font-size: 0.95rem; }
+  .svc-side__cta { width: 100%; justify-content: center; }
+  .svc-side__nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .svc-side__nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 860px) {
+    .svc-grid { grid-template-columns: 1fr; }
+    .svc-side { position: static; }
+  }
+  @media (max-width: 520px) {
+    .svc-deliverables { grid-template-columns: 1fr; }
+  }
+</style>

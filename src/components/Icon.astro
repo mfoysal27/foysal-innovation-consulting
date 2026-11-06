@@ -1,0 +1,106 @@
+---
+/**
+ * Icon — small, consistent line icons used across service and pathway cards.
+ * All icons share a 24x24 viewBox and inherit `currentColor`.
+ */
+export interface Props {
+  name:
+    | "discovery"
+    | "proposal"
+    | "software"
+    | "mvp"
+    | "printing"
+    | "validate"
+    | "build"
+    | "develop"
+    | "arrow"
+    | "mail"
+    | "check"
+    | "link";
+  size?: number;
+  label?: string;
+}
+const { name, size = 24, label } = Astro.props;
+const a11y = label
+  ? { role: "img" as const, "aria-label": label }
+  : { "aria-hidden": "true" as const, focusable: "false" as const };
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  {...a11y}
+>
+  {name === "discovery" && (
+    <>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="M16 16 L21 21" />
+      <path d="M8.5 11 h5 M11 8.5 v5" />
+    </>
+  )}
+  {name === "proposal" && (
+    <>
+      <path d="M6 3 h8 l4 4 v14 H6 Z" />
+      <path d="M14 3 v4 h4" />
+      <path d="M9 12 h6 M9 15.5 h6 M9 8.5 h3" />
+    </>
+  )}
+  {name === "software" && (
+    <>
+      <path d="M9 8 L5 12 L9 16" />
+      <path d="M15 8 L19 12 L15 16" />
+      <path d="M13 6 L11 18" />
+    </>
+  )}
+  {name === "mvp" && (
+    <>
+      <path d="M12 3 l2.3 4.7 5.2 .8 -3.8 3.7 .9 5.2 -4.6 -2.4 -4.6 2.4 .9 -5.2 -3.8 -3.7 5.2 -.8 Z" />
+    </>
+  )}
+  {name === "printing" && (
+    <>
+      <path d="M6 4 h12 v5 H6 Z" />
+      <path d="M4 9 h16 v7 H4 Z" />
+      <path d="M8 16 v4 h8 v-4" />
+      <path d="M8 12 h8" />
+    </>
+  )}
+  {name === "validate" && (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M8 12 l3 3 l5 -6" />
+    </>
+  )}
+  {name === "build" && (
+    <>
+      <path d="M14 4 l6 6 -4 4 -6 -6 Z" />
+      <path d="M10 8 L4 14 v6 h6 l6 -6" />
+    </>
+  )}
+  {name === "develop" && (
+    <>
+      <path d="M3 17 l5 -5 3 3 7 -8" />
+      <path d="M18 4 h3 v3" />
+    </>
+  )}
+  {name === "arrow" && <path d="M4 12 h15 M13 6 l6 6 -6 6" />}
+  {name === "mail" && (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 7 l9 6 9 -6" />
+    </>
+  )}
+  {name === "check" && <path d="M4 12 l5 5 L20 6" />}
+  {name === "link" && (
+    <>
+      <path d="M10 14 a4 4 0 0 0 6 0 l2 -2 a4 4 0 0 0 -6 -6 l-1 1" />
+      <path d="M14 10 a4 4 0 0 0 -6 0 l-2 2 a4 4 0 0 0 6 6 l1 -1" />
+    </>
+  )}
+</svg>

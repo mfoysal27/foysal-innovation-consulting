@@ -1,0 +1,83 @@
+---
+/**
+ * BrandMark — KF monogram + wordmark lockup.
+ * `variant="mark"` renders only the monogram tile; `variant="full"` adds the
+ * wordmark. No fictitious corporate seal — a tasteful typographic treatment.
+ */
+import { SITE } from "../config/site";
+
+export interface Props {
+  variant?: "mark" | "full";
+  size?: number;
+}
+const { variant = "full", size = 38 } = Astro.props;
+---
+
+<span class="brandmark" data-variant={variant}>
+  <svg
+    class="brandmark__tile"
+    width={size}
+    height={size}
+    viewBox="0 0 64 64"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect width="64" height="64" rx="14" fill="var(--c-ink)" />
+    <g stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M18 16 V48" stroke="#faf7f1" />
+      <path d="M18 33 L30 16 M18 33 L31 48" stroke="#faf7f1" />
+      <path d="M38 48 V16 H50" stroke="var(--c-accent)" />
+      <path d="M38 32 H48" stroke="var(--c-accent)" />
+    </g>
+  </svg>
+  {variant === "full" && (
+    <span class="brandmark__word">
+      <span class="brandmark__name">Foysal Innovation</span>
+      <span class="brandmark__sub">Consulting</span>
+    </span>
+  )}
+  <span class="sr-only">{SITE.brandName}</span>
+</span>
+
+<style>
+  .brandmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  .brandmark__tile {
+    flex: none;
+    border-radius: 12px;
+  }
+  .brandmark__word {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+  .brandmark__name {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.12rem;
+    color: var(--c-ink);
+    letter-spacing: -0.01em;
+  }
+  .brandmark__sub {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-accent-strong);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

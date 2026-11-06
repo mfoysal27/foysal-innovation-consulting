@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE, hasContactEmail } from "../config/site";
+
+const emailConfigured = hasContactEmail();
+const updated = "November 2026";
+---
+
+<BaseLayout
+  title="Privacy"
+  description="How Foysal Innovation Consulting handles the information you choose to share."
+  canonicalPath="/privacy"
+>
+  <section class="section--tight page-hero">
+    <div class="container-narrow">
+      <p class="eyebrow">Privacy</p>
+      <h1>Privacy &amp; information handling</h1>
+      <p class="muted">Last updated: {updated}</p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container-narrow legal">
+      <h2>No tracking by default</h2>
+      <p>
+        This website does not use advertising cookies or third-party analytics
+        trackers. It is a static site served over HTTPS, built to load quickly
+        and collect as little as possible.
+      </p>
+
+      <h2>The inquiry form</h2>
+      <p>
+        The project inquiry form runs in your browser. When you submit it, the
+        details you entered are used to prepare an email in your own mail
+        application. Your message is only sent if you review it and press send
+        yourself. The information you type is not stored in analytics or encoded
+        into page URLs by this site.
+      </p>
+      <p>
+        Please do not submit confidential information, patient data, or
+        proprietary files through the inquiry form. Share only what you are
+        comfortable sending by ordinary email; sensitive materials can be
+        exchanged later under a written agreement.
+      </p>
+
+      <h2>Information you send me</h2>
+      <p>
+        If you contact me, I receive the information you include — such as your
+        name, email, and project description — so I can respond and, if we work
+        together, carry out the engagement. I use it for that purpose only and do
+        not sell it or share it with unrelated third parties.
+      </p>
+
+      <h2>Confidentiality &amp; intellectual property</h2>
+      <p>
+        Confidentiality and intellectual property terms are agreed in writing
+        before any paid work begins. Nothing on this website creates such an
+        agreement by itself.
+      </p>
+
+      <h2>Independence</h2>
+      <p>{SITE.independenceNotice}</p>
+
+      <h2>Contact</h2>
+      <p>
+        {emailConfigured
+          ? "For any privacy question, email me using the address published on the contact page."
+          : "A direct contact email is being finalized. Until then, please use the inquiry form on the contact page for any privacy question."}
+      </p>
+      <p><a href="/contact">Go to the contact page →</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-top: var(--space-7); }
+  .page-hero h1 { margin-block: var(--space-3) var(--space-2); }
+  .legal h2 {
+    font-size: 1.3rem;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p { margin-bottom: var(--space-4); }
+</style>

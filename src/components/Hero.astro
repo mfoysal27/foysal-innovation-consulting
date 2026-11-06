@@ -1,0 +1,70 @@
+---
+/**
+ * Hero — home page hero with value proposition and two actions.
+ */
+import BrandArtwork from "./BrandArtwork.astro";
+import Icon from "./Icon.astro";
+import { SITE } from "../config/site";
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow">Founder-led engineering &amp; commercialization</p>
+      <h1 class="hero__title">
+        Turn a promising idea into a clear plan and a working prototype.
+      </h1>
+      <p class="lead hero__lead">
+        Business discovery, AI, software, and engineering support for founders and
+        small teams — led by {SITE.founderDisplayName}, {SITE.founderCredential}.
+      </p>
+      <div class="btn-row hero__actions">
+        <a href="/contact" class="btn btn--primary">
+          Discuss Your Project <Icon name="arrow" size={18} />
+        </a>
+        <a href="/services" class="btn btn--secondary">Explore Services</a>
+      </div>
+      <p class="hero__sub muted">
+        {SITE.location} · {SITE.serviceArea}
+      </p>
+    </div>
+
+    <div class="hero__art" aria-hidden="false">
+      <BrandArtwork />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 50% at 85% 10%, rgba(15, 118, 110, 0.07), transparent 70%),
+      radial-gradient(50% 40% at 0% 100%, rgba(23, 40, 61, 0.05), transparent 70%);
+    pointer-events: none;
+  }
+  .hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: var(--space-7);
+  }
+  .hero__title { margin-bottom: var(--space-4); }
+  .hero__lead { margin-bottom: var(--space-5); max-width: 52ch; }
+  .hero__actions { margin-bottom: var(--space-5); }
+  .hero__sub { font-size: 0.9rem; }
+  .hero__art { display: flex; justify-content: center; }
+
+  @media (max-width: 860px) {
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__art { order: -1; max-width: 420px; margin-inline: auto; }
+  }
+</style>

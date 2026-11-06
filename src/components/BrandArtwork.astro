@@ -1,0 +1,90 @@
+---
+/**
+ * BrandArtwork — original decorative SVG combining a signal trace, an
+ * engineering form (nodes/axes), and a product concept (layered panel).
+ * This is brand artwork only — NOT evidence of completed client projects.
+ */
+---
+
+<svg
+  class="brand-artwork"
+  viewBox="0 0 520 440"
+  role="img"
+  aria-label="Abstract illustration combining a signal trace, an engineering diagram, and a product concept"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#f3efe6" />
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e" />
+      <stop offset="1" stop-color="#0b5a53" />
+    </linearGradient>
+  </defs>
+
+  <!-- soft backdrop -->
+  <circle cx="300" cy="180" r="150" fill="#e4f0ee" opacity="0.6" />
+
+  <!-- product concept: layered panels -->
+  <g class="art-panel">
+    <rect x="150" y="120" width="250" height="170" rx="18" fill="url(#panel)" stroke="#d6ccb8" />
+    <rect x="150" y="120" width="250" height="40" rx="18" fill="#17283d" />
+    <circle cx="172" cy="140" r="5" fill="#0f766e" />
+    <circle cx="190" cy="140" r="5" fill="#faf7f1" opacity="0.7" />
+    <circle cx="208" cy="140" r="5" fill="#faf7f1" opacity="0.4" />
+  </g>
+
+  <!-- engineering form: axes + nodes -->
+  <g stroke="#17283d" stroke-width="1.5" fill="none" opacity="0.85">
+    <path d="M175 265 H375" />
+    <path d="M190 180 V270" />
+    <circle cx="190" cy="180" r="5" fill="#faf7f1" />
+    <circle cx="250" cy="215" r="5" fill="#faf7f1" />
+    <circle cx="310" cy="195" r="5" fill="#faf7f1" />
+    <circle cx="355" cy="230" r="5" fill="#faf7f1" />
+    <path d="M190 180 L250 215 L310 195 L355 230" stroke="#6a7686" stroke-dasharray="4 4" />
+  </g>
+
+  <!-- signal trace: the throughline -->
+  <path
+    class="art-signal"
+    d="M40 360 H120 l22 -70 26 120 24 -170 22 110 20 -40 h60 l20 -60 24 100 h118"
+    fill="none"
+    stroke="url(#teal)"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- product concept highlight dot -->
+  <circle cx="420" cy="300" r="8" fill="url(#teal)" />
+  <circle cx="420" cy="300" r="16" fill="none" stroke="#0f766e" stroke-width="1.5" opacity="0.5" />
+</svg>
+
+<style>
+  .brand-artwork {
+    width: 100%;
+    height: auto;
+    max-width: 520px;
+  }
+  .art-signal {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: trace 2.4s var(--ease) forwards 0.2s;
+  }
+  .art-panel { animation: floaty 7s ease-in-out infinite; transform-origin: center; }
+
+  @keyframes trace {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .art-signal { stroke-dashoffset: 0; animation: none; }
+    .art-panel { animation: none; }
+  }
+</style>

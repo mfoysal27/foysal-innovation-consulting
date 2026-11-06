@@ -1,0 +1,78 @@
+---
+/**
+ * FaqAccordion — native <details> accordion (no JS required, accessible).
+ */
+import type { FaqItem } from "../config/faq";
+
+export interface Props {
+  items: FaqItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {items.map((item, i) => (
+    <details class="faq__item" name="faq" open={i === 0}>
+      <summary class="faq__q">
+        <span>{item.question}</span>
+        <span class="faq__marker" aria-hidden="true"></span>
+      </summary>
+      <div class="faq__a"><p>{item.answer}</p></div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .faq__item {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: 0 var(--space-5);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .faq__item[open] {
+    border-color: var(--c-border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-4) 0;
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__marker {
+    position: relative;
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+  .faq__marker::before,
+  .faq__marker::after {
+    content: "";
+    position: absolute;
+    background: var(--c-accent);
+    border-radius: 2px;
+    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+  .faq__marker::before { top: 8px; left: 0; width: 18px; height: 2px; }
+  .faq__marker::after { top: 0; left: 8px; width: 2px; height: 18px; }
+  .faq__item[open] .faq__marker::after { transform: scaleY(0); opacity: 0; }
+  .faq__a {
+    padding-bottom: var(--space-5);
+    color: var(--c-ink-soft);
+  }
+  .faq__a p { margin: 0; }
+</style>

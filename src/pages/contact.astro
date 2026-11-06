@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import InquiryForm from "../components/InquiryForm.astro";
+import Icon from "../components/Icon.astro";
+import { SITE, hasContactEmail } from "../config/site";
+import { PROCESS } from "../config/process";
+
+const emailConfigured = hasContactEmail();
+const bookingConfigured = SITE.bookingUrl.trim().length > 0;
+---
+
+<BaseLayout
+  title="Start a Project"
+  description="Start a project with Foysal Innovation Consulting. Share a short, non-confidential description and I'll suggest a sensible first step."
+  canonicalPath="/contact"
+>
+  <section class="section--tight page-hero">
+    <div class="container">
+      <p class="eyebrow">Start a project</p>
+      <h1>Let's discuss your project</h1>
+      <p class="lead">
+        Tell me what you're trying to build or figure out. I read every inquiry
+        personally and will reply with honest, specific next steps — or point you
+        elsewhere if I'm not the right fit.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container contact-grid">
+      <div class="contact-form">
+        <InquiryForm />
+      </div>
+
+      <aside class="contact-side">
+        <div class="card contact-card" data-reveal>
+          <h2 class="contact-card__h">What happens next</h2>
+          <ol class="contact-steps">
+            {PROCESS.slice(0, 3).map((s) => (
+              <li>
+                <span class="contact-steps__num">{s.step}</span>
+                <div>
+                  <strong>{s.title}</strong>
+                  <p>{s.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="card contact-card" data-reveal>
+          <h2 class="contact-card__h">Other ways to reach me</h2>
+          {emailConfigured ? (
+            <a class="contact-direct" href={`mailto:${SITE.contactEmail}`}>
+              <Icon name="mail" size={18} /> {SITE.contactEmail}
+            </a>
+          ) : (
+            <p class="muted contact-pending">
+              A direct business email is being finalized and will be published
+              here shortly. In the meantime, use the inquiry form.
+            </p>
+          )}
+          {bookingConfigured && (
+            <a class="btn btn--secondary contact-book" href={SITE.bookingUrl} target="_blank" rel="noopener">
+              Book a call <Icon name="arrow" size={18} />
+            </a>
+          )}
+          <p class="muted contact-note">
+            Based in {SITE.location}. {SITE.serviceArea}
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-top: var(--space-7); }
+  .page-hero h1 { margin-block: var(--space-3) var(--space-4); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .contact-side { display: flex; flex-direction: column; gap: var(--space-5); position: sticky; top: 90px; }
+  .contact-card__h { font-size: 1.15rem; margin-bottom: var(--space-4); }
+
+  .contact-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+  .contact-steps li { display: flex; gap: var(--space-3); align-items: flex-start; }
+  .contact-steps__num {
+    flex: none;
+    width: 30px; height: 30px;
+    display: grid; place-items: center;
+    border-radius: 999px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-strong);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .contact-steps strong { color: var(--c-ink); }
+  .contact-steps p { margin: 0.15rem 0 0; font-size: 0.9rem; color: var(--c-ink-soft); }
+
+  .contact-direct {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+  }
+  .contact-pending { font-size: 0.9rem; }
+  .contact-book { margin-top: var(--space-4); width: 100%; justify-content: center; }
+  .contact-note { font-size: 0.85rem; margin-top: var(--space-4); }
+
+  @media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-side { position: static; }
+  }
+</style>

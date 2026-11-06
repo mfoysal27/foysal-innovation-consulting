@@ -1,0 +1,60 @@
+---
+/**
+ * PathwayCard — one stage of the product development journey.
+ */
+import Icon from "./Icon.astro";
+import type { Pathway } from "../config/pathways";
+
+export interface Props {
+  pathway: Pathway;
+}
+const { pathway } = Astro.props;
+---
+
+<article class="pathway" data-reveal>
+  <div class="pathway__top">
+    <span class="pathway__icon" aria-hidden="true">
+      <Icon name={pathway.icon} size={24} />
+    </span>
+    <span class="pathway__step">{pathway.step}</span>
+  </div>
+  <h3 class="pathway__title">{pathway.title}</h3>
+  <p class="pathway__desc">{pathway.description}</p>
+</article>
+
+<style>
+  .pathway {
+    position: relative;
+    padding: var(--space-6);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-top: 3px solid var(--c-accent);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+  }
+  .pathway__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .pathway__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--c-accent-soft);
+    color: var(--c-accent-strong);
+  }
+  .pathway__step {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    color: var(--c-border-strong);
+    font-weight: 700;
+  }
+  .pathway__title { margin-bottom: var(--space-2); }
+  .pathway__desc { color: var(--c-ink-soft); }
+</style>

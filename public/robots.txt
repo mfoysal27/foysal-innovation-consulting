@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Sitemap is generated at build time by @astrojs/sitemap.
+# The absolute URL is derived from SITE.url in src/config/site.ts.
+Sitemap: https://foysal-innovation-consulting.pages.dev/sitemap-index.xml
