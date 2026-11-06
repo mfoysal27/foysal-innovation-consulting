@@ -74,8 +74,8 @@ export const SITE: SiteConfig = {
   location: "Rochester, Minnesota",
   serviceArea: "Working remotely with clients across the United States.",
 
-  // Blocked for public launch until a verified business email is supplied.
-  contactEmail: "",
+  // Verified business email supplied by the founder.
+  contactEmail: "foysalinnovationconsulting@gmail.com",
 
   // No scheduling link supplied yet — stays hidden.
   bookingUrl: "",
